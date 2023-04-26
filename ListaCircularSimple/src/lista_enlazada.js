@@ -4,8 +4,7 @@ export default // Clase LinkedList
 class SCLinkedList {
   constructor() {
     this.head = null;
-    this.tail = null;
-    this.size = 0;
+
   }
 
   scInsert(data){
