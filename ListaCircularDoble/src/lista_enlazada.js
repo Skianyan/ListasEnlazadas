@@ -8,7 +8,7 @@ class SCLinkedList {
     this.size = 0;
   }
 
-  scInsert(data){
+  dcInsert(data){
     let newnode = new Node(data)
 
     if(this.head === null) {
