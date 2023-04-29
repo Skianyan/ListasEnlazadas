@@ -7,7 +7,7 @@ class StackList {
     }
     
     stackTop = () => {
-      console.log(this.top.data) 
+      console.log(this.top.data)
     }
 
     isVoid = () => {
@@ -36,7 +36,7 @@ class StackList {
     }
 
     pop = () => {
-      if (this.pilaVoid()){
+      if (this.isVoid()){
         throw new Error ("Pila vacia")
       }
       this.aux = this.top.data
@@ -47,7 +47,7 @@ class StackList {
     printStack() {
       let temp = this.top;
       let values = '';
-      if (this.pilaVoid()){
+      if (this.isVoid()){
         throw new Error ("Pila vacia")
       }
       do{
@@ -58,46 +58,10 @@ class StackList {
       }
 
       toPost(data){
-        let salida = ""
-        let stack = []
-        let consts = {"+": 1,"-": 1,"*": 2,"/": 2,"^": 3}
-      
-        for (let i = 0; i < data.length; i++) {
-          let caracter = data[i]
-          if (/^[a-zA-Z0-9]+$/.test(caracter)) {
-            salida += caracter
-          } else if (caracter === "(") {
-            stack.push(caracter)
-          } else if (caracter=== ")") {
-            while (stack.length > 0 && stack[stack.length - 1] !== "(") {
-              salida += stack.pop()
-            }
-            stack.pop()
-          } else {
-            while (
-              stack.length > 0 &&
-              stack[stack.length - 1] !== "(" &&
-              consts[caracter] <= consts[stack[stack.length - 1]]
-            ) {
-              salida += stack.pop()
-            }
-            stack.push(caracter)
-          }
-        }
-      
-        while (pila.length > 0) {
-          salida += pila.pop()
-        }
-      
-    console.log(salida)
-      }
-}
-
-/*
-const stack = new StackList();
+      const stack = new StackList();
         let splitText = data.split("");
         let ans = []
-        const constantes = {"(":"0","+":"1", "-":"1", "*":"2", "/":"2", "^":"3"}
+        const constantes = {"(":0,"+":1, "-":1, "*":2, "/":2, "^":3}
 
         for (let i=0; i<splitText.length; i++){
             if (!['+','-','*','/','('].includes(splitText[i])){
@@ -126,4 +90,46 @@ const stack = new StackList();
             
         }
         console.log(ans)
-*/
+      }
+  
+}
+/*
+      toPost(data){
+        let salida = ""
+        const stack = new StackList();
+        let consts = {"+": 1,"-": 1,"*": 2,"/": 2,"^": 3}
+      
+        for (let i = 0; i < data.length; i++) {
+          let caracter = data[i]
+          if (/^[a-zA-Z0-9]+$/.test(caracter)) {
+            salida += caracter
+          } else if (caracter === "(") {
+            stack.push(caracter)
+          } else if (caracter=== ")") {
+            while (stack.stackSize(stack) > 0 && stack[stack.stackSize(stack) - 1] !== "(") {
+              salida += stack.pop()
+            }
+            stack.push(caracter)
+          } else {
+            while (
+              stack.stackSize(stack) > 0 &&
+              stack[stack.stackSize(stack) - 1] !== "(" &&
+              consts[caracter] <= consts[stack[stack.stackSize(stack) - 1]]
+            ) {
+              salida += stack.pop()
+            }
+            stack.push(caracter)
+          }
+        }
+      
+        while (stack.stackSize(stack) > 0) {
+          salida += stack.pop()
+        }
+      
+    console.log(salida)
+      }
+  */
+
+
+
+
