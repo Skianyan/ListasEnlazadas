@@ -14,11 +14,11 @@ class StackList {
       return this.top === null
     }
 
-    stackWipe = () => {
+    wipe = () => {
       this.top = null
     }
 
-    stackSize = () => {
+    length = () => {
         var temp = this.top;
         var count = 0;
       while (temp != null)
@@ -37,7 +37,7 @@ class StackList {
 
     pop = () => {
       if (this.isVoid()){
-        throw new Error ("Pila vacia")
+        throw new Error ("Pila vacia (pop func)")
       }
       this.aux = this.top.data
       this.top = this.top.next
@@ -48,7 +48,7 @@ class StackList {
       let temp = this.top;
       let values = '';
       if (this.isVoid()){
-        throw new Error ("Pila vacia")
+        throw new Error ("Pila vacia (print func)")
       }
       do{
               values += temp.data + '-> ';
@@ -57,79 +57,48 @@ class StackList {
           console.log(values + 'null')
       }
 
-      toPost(data){
-      const stack = new StackList();
-        let splitText = data.split("");
-        let ans = []
-        const constantes = {"(":0,"+":1, "-":1, "*":2, "/":2, "^":3}
-
-        for (let i=0; i<splitText.length; i++){
-            if (!['+','-','*','/','('].includes(splitText[i])){
-                  ans.push(splitText[i])
-            }
-            else if (splitText[i] == ")"){
-                while (!(stack[stack.stackSize - 1] == '(')){
-                    ans += stack.pop(stack.stackSize-1)
-                }
-                    stack.top = stack[stack.stackSize-2]
-            }
-            else if (stack.isVoid()){
-                stack.push(splitText[i])
-            }
-            else if (!stack.isVoid()) {
-                if (splitText[i]>stack[stack.stackSize-1]){
-                    stack.push(splitText[i])
-                }
-                else if (splitText[i]<=stack[stack.stackSize-1]){
-                    ans += stack.pop(stack.stackSize-1)
-                }
-                else{
-                    ans.push(splitText[i])
-                }
-            }
-            
-        }
-        console.log(ans)
-      }
-  
-}
-/*
-      toPost(data){
-        let salida = ""
-        const stack = new StackList();
-        let consts = {"+": 1,"-": 1,"*": 2,"/": 2,"^": 3}
+    toPost(data) {
+        const values = {
+          '+': 1,
+          '-': 1,
+          '*': 2,
+          '/': 2,
+          '^': 3,
+        };
+      
+        const stack = new StackList()
+        let output = '';
       
         for (let i = 0; i < data.length; i++) {
-          let caracter = data[i]
-          if (/^[a-zA-Z0-9]+$/.test(caracter)) {
-            salida += caracter
-          } else if (caracter === "(") {
-            stack.push(caracter)
-          } else if (caracter=== ")") {
-            while (stack.stackSize(stack) > 0 && stack[stack.stackSize(stack) - 1] !== "(") {
-              salida += stack.pop()
+          const char = data[i];
+      
+          if (/[A-Za-z0-9]/.test(char)) {
+            output += char;
+          } else if (char === '(') {
+            stack.push(char);
+          } else if (char === ')') {
+            while (stack.top.data !== '(') {
+              output += stack.pop();
             }
-            stack.push(caracter)
-          } else {
-            while (
-              stack.stackSize(stack) > 0 &&
-              stack[stack.stackSize(stack) - 1] !== "(" &&
-              consts[caracter] <= consts[stack[stack.stackSize(stack) - 1]]
-            ) {
-              salida += stack.pop()
+            stack.pop();
+          } else { // char is an operator
+            if (stack.top != null){
+            if (stack.top.data !== '(' && values[char] <= values[stack.top.data]) {
+              output += stack.pop();
             }
-            stack.push(caracter)
+            stack.push(char);
+          }
+          else
+            stack.push(char);
           }
         }
       
-        while (stack.stackSize(stack) > 0) {
-          salida += stack.pop()
+        while (stack.top != null) {
+          output += stack.pop();
         }
       
-    console.log(salida)
+        console.log(output)
       }
-  */
-
-
-
-
+      
+  
+}
